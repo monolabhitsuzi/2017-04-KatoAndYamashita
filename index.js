@@ -2,6 +2,8 @@ const electron = require('electron');
 const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
 
+const database = require("./databaseManager.js");
+
 let mainWindow = null;
 app.on('ready', () => {
     // mainWindowを作成（windowの大きさや、Kioskモードにするかどうかなどもここで定義できる）
@@ -11,6 +13,8 @@ app.on('ready', () => {
 
 // ChromiumのDevツールを開く
     mainWindow.webContents.openDevTools();
+
+    database.foo();
 
     mainWindow.on('closed', function () {
         mainWindow = null;
