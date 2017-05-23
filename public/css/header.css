@@ -1,0 +1,23 @@
+.header {
+    border: solid lightgray 1px;
+    height: 10%;
+    overflow: hidden;
+}
+
+.header input {
+    float: left;
+    /*width: 33.3%;*/
+    height: 100%;
+    list-style-type: none;
+    display: block;
+    border: 1px solid lightgray;
+    background-color: black;
+    color: lightgray;
+}
+
+.header ul {
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+}

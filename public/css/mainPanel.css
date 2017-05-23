@@ -1,0 +1,21 @@
+#mainPanel {
+    float: right;
+    width: 74%;
+    height: 100%;
+    border: solid lightgray 1px;
+    overflow-y: scroll;
+}
+
+#mainPanel::-webkit-scrollbar {
+    width: 12px;
+}
+
+#mainPanel::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    border-radius: 10px;
+}
+
+#mainPanel::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(150,150,150,150.5);
+}

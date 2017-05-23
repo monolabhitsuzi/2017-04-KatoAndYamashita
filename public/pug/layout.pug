@@ -13,12 +13,13 @@ html(lang='ja')
         block meta
         link(rel='shortcut icon', href='/favicon.ico')
         link(rel="stylesheet", type="text/css", href="./public/css/common.css")
+        script(type="text/javascript" src="./bundle/script.js")
     body
         header.header
             include ./header
-        div.mainPanel
+        div.main
             include ./left
-            include ./main
+            include mainPanel
 
         footer.footer
             include ./footer

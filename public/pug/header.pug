@@ -1,7 +1,10 @@
 //
    Created by zf7he on 2017/05/23.
 
+link(rel="stylesheet", type="text/css", href="./public/css/header.css")
+
+- var list = ['buttonA', 'buttonB', 'buttonC', 'buttonD']
+
 ul
-    - for (var $i = 1; $i <= 3; $i++)
-        input(type="button" value="button")
-    -
+    each item in list
+        input(type="button" value=item style="width: " + 100 / list.length + "%")
