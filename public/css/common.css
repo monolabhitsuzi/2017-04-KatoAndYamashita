@@ -1,0 +1,21 @@
+html {
+    background-color: #2d2d30;
+    color: lightgray;
+    font-family: "Ricty Diminished", Consolas, serif;
+}
+
+.header {
+    border:solid lightgray 1px;
+}
+
+.left {
+    float: left;
+    width: 30%;
+    border:solid lightgray 1px;
+}
+
+.main {
+    float: right;
+    width: 68%;
+    border:solid lightgray 1px;
+}

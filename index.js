@@ -11,8 +11,8 @@ let mainWindow = null;
 app.on('ready', () => {
     // mainWindowを作成（windowの大きさや、Kioskモードにするかどうかなどもここで定義できる）
     mainWindow = new BrowserWindow({
-            width: 800,
-            height: 1000,
+            width: 1000,
+            height: 800,
         }
     );
 // Electronに表示するhtmlを絶対パスで指定（相対パスだと動かない）
