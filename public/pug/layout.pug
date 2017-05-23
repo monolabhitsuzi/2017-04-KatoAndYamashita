@@ -14,7 +14,11 @@ html(lang='ja')
         link(rel='shortcut icon', href='/favicon.ico')
         link(rel="stylesheet", type="text/css", href="./public/css/common.css")
     body
-        include ./header
-        include ./main
-        block body
-        include ./left
+        header.header
+            include ./header
+        div.mainPanel
+            include ./left
+            include ./main
+
+        footer.footer
+            include ./footer
