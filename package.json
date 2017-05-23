@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/ktr0328/MoneyManager/issues"
   },
-  "homepage": "https://github.com/ktr0328/MoneyManager#readme"
+  "homepage": "https://github.com/ktr0328/MoneyManager#readme",
+  "devDependencies": {
+    "electron-pug": "^1.5.1"
+  }
 }
