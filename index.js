@@ -14,7 +14,7 @@ app.on('ready', () => {
 // ChromiumのDevツールを開く
     mainWindow.webContents.openDevTools();
 
-    database.foo();
+    database.writeDb();
 
     mainWindow.on('closed', function () {
         mainWindow = null;

@@ -1,11 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Hello World!</title>
+    <meta charset="utf-8" />
+    <title>ユーザー認証テスト</title>
 </head>
 <body>
-Hello World!
+<h1>ユーザー認証</h1>
+
+<div class="container">
+    <div id="input">
+        <input id="email" type="email" placeholder="メールアドレスを入力" required/>
+        <input id="password" type="password" placeholder="パスワードを入力" required/>
+        <button id="login">ログイン</button>
+        <button id="newuser">新規登録</button>
+    </div>
+    <button id="logout" class="hide">ログアウト</button>
+</div>
+
+<!-- テキスト表示用 -->
+<p id="info"></p>
+
+<script src="https://www.gstatic.com/firebasejs/3.4.1/firebase.js"></script>
+<script src="app.js"></script>
 <script type="text/javascript" src="databaseManager.js"></script>
 </body>
 </html>
