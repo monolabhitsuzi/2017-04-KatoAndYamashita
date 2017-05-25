@@ -3,13 +3,25 @@
  * Created by zf7he on 2017/05/24.
  */
 const $ = require('jquery');
+const req = require('require.js');
 
 $(function () {
     console.log("あああああ");
-    // $('#mainPanel').css('background-color', 'black');
+    $('#mainPanel').css('background-color', 'black');
 });
 
-},{"jquery":2}],2:[function(require,module,exports){
+const boo = require('./test');
+boo();
+
+},{"./test":2,"jquery":3,"require.js":4}],2:[function(require,module,exports){
+/**
+ * Created by zf7he on 2017/05/24.
+ */
+module.exports = function () {
+    console.log(999);
+};
+
+},{}],3:[function(require,module,exports){
 /*!
  * jQuery JavaScript Library v3.2.1
  * https://jquery.com/
@@ -10263,5 +10275,39 @@ if ( !noGlobal ) {
 
 return jQuery;
 } );
+
+},{}],4:[function(require,module,exports){
+if ('undefined' === typeof define) {
+	(function() {
+		var defs = {},
+			resolved = {};
+
+		define = function(id, deps, factory) {
+			if (defs[id]) {
+				throw new Error('Duplicate definition for ' + id);
+			}
+			defs[id] = [deps, factory];
+		}
+
+		define.amd = {
+			bundle: true, // this implementation works only with bundled amd modules
+			dynamic: false, // does not support dynamic or async loading
+		};
+
+		require = function(id) {
+			if (!resolved[id]) {
+				if (!defs[id]) {
+					throw new Error('No definition for ' + id);
+				}
+				var deps = defs[id][0];
+				var factory = defs[id][1];
+				var args = deps.map(require);
+				resolved[id] = factory.apply(null, args);
+				delete defs[id];
+			}
+			return resolved[id];
+		}
+	})();
+}
 
 },{}]},{},[1]);

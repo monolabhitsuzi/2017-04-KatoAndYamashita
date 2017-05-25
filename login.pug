@@ -1,0 +1,21 @@
+//
+   Created by zf7he on 2017/05/25.
+
+doctype html
+html
+    head
+        meta(charset='utf-8')
+        title ユーザー認証
+        link(rel="stylesheet", type="text/css", href="./public/css/common.css")
+    body
+        h1 ユーザー認証
+        .container
+            #input
+                input#email(type='email', placeholder='メールアドレスを入力', required='')
+                input#password(type='password', placeholder='パスワードを入力', required='')
+                button#login ログイン
+                button#newuser 新規登録
+        // テキスト表示用
+        p#info
+        script(src='https://www.gstatic.com/firebasejs/3.4.1/firebase.js')
+        script(src='./public/js/app.js')

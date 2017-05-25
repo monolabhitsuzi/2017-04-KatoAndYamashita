@@ -13,10 +13,13 @@ app.on('ready', () => {
     mainWindow = new BrowserWindow({
             width: 1000,
             height: 800,
+            webPreferences: {
+                nodeIntegration: false
+            }
         }
     );
 // Electronに表示するhtmlを絶対パスで指定（相対パスだと動かない）
-    mainWindow.loadURL('file://' + __dirname + '/index.pug');
+    mainWindow.loadURL('file://' + __dirname + '/login.pug');
 
     // mainWindow.webContents.openDevTools();
 
