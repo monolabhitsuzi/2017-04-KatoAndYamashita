@@ -12,42 +12,41 @@ let config = {
 
 firebase.initializeApp(config);
 
-exports.writeDb = function () {
-    const userName = "メールアドレスにする予定";
-    const category = "お寿司";
-    const dateYear = 2016;
-    const dateMonth = 7;
-    const dateDay = 21;
+//データベース書き込み
+exports.writeDb = function (userName , category ,date , datas) {
+    // const userName = "メールアドレスにする予定";
+    // const category = "カテゴリ2";
+    // const dateYear = 2016;
+    // const dateMonth = 7;
+    // const dateDay = 21;
+    //
+    // const date = "" + dateYear + dateMonth + dateDay;
+    //
+    // const item = "さんま";
+    // const price = 1000;
+    // const place = "イケヤ";
+    // const comment = "値切った結果";
+    //
+    // const datas = [{"品目": item, "価格": price, "購入場所": place, "備考": comment}];
 
-    const date = "" + dateYear + dateMonth + dateDay;
-
-    const item = "さんま";
-    const price = 1000;
-    const place = "イケヤ";
-    const comment = "値切った結果";
-
-    const datas = [{"品目": item, "価格": price, "購入場所": place, "備考": comment}];
-
-    const a = new DataContainer();
+    const dataContainer = new DataContainer();
 
     //datas: [{}]
     //配列型のオブジェクト[{}]　書き込み専用
     const datasPath = firebase.database().ref(userName + "/" + category + "/" + date);
     datasPath.once('value').then(function (snapshot) {
         if (snapshot.val() === null) {
-            a.setDatas(datas);
+            dataContainer.setDatas(datas);
         } else {
             oldDatas = snapshot.val();
             for (let i = 0; i < datas.length; i++) {
                 oldDatas.push(datas[i]);
             }
-            a.setDatas(oldDatas);
+            dataContainer.setDatas(oldDatas);
         }
         //set( [{}] )
-        firebase.database().ref(userName).child(category).child(date).set(a.getDatas());
+        firebase.database().ref(userName).child(category).child(date).set(dataContainer.getDatas());
     });
-
-    console.log("aa");
 
 };
 
@@ -74,3 +73,14 @@ const DataContainer = (function () {
     };
     return DataContainer;
 })();
+
+//データベース読み込み用
+exports.readCategory = function (mail) {
+    let categoryRef = firebase.database().ref('メールアドレスにする予定');
+
+    categoryRef.once('value').then(function(snapshot) {
+       return snapshot.val();
+    });
+};
+
+

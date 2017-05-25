@@ -17,6 +17,9 @@
   },
   "homepage": "https://github.com/ktr0328/MoneyManager#readme",
   "dependencies": {
-    "firebase": "^4.0.0"
+    "co": "^4.6.0",
+    "firebase": "^4.0.0",
+    "promise": "^7.1.1",
+    "socket.io": "^2.0.1"
   }
 }
