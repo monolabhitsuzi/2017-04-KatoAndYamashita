@@ -9,5 +9,5 @@ $(function () {
     $('#mainPanel').css('background-color', 'black');
 });
 
-const boo = require('./test');
+const boo = require('./3d');
 boo();
