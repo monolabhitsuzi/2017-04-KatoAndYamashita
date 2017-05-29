@@ -77,3 +77,12 @@ const DataContainer = (function () {
     };
     return DataContainer;
 })();
+
+//データベース読み込み用
+exports.readCategory = function (mail) {
+    let categoryRef = firebase.database().ref('メールアドレスにする予定');
+
+    categoryRef.once('value').then(function(snapshot) {
+        return snapshot.val();
+    });
+};
