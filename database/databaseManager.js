@@ -17,10 +17,10 @@ firebase.initializeApp(config);
 
 exports.writeDb = function () {
     const userName = "メールアドレスにする予定";
-    const category = "お寿司";
-    const dateYear = 2016;
-    const dateMonth = 7;
-    const dateDay = 21;
+    const category = "カテゴリ3";
+    const dateYear = "2016";
+    const dateMonth = "03";
+    const dateDay = "21";
 
     const date = "" + dateYear + dateMonth + dateDay;
 
@@ -49,8 +49,6 @@ exports.writeDb = function () {
         //set( [{}] )
         firebase.database().ref(userName).child(category).child(date).set(a.getDatas());
     });
-
-    console.log("aa");
 
 };
 

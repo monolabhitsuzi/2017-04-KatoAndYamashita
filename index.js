@@ -4,6 +4,8 @@ const electron = require('electron');
 const app = electron.app;
 const BrowserWindow = electron.BrowserWindow;
 
+const db = require("./database/databaseManager.js");
+
 const locals = {/* ...*/};
 const pug = require('electron-pug')({pretty: true}, locals);
 
@@ -22,6 +24,7 @@ app.on('ready', () => {
     mainWindow.loadURL('file://' + __dirname + '/login.pug');
 
     // mainWindow.webContents.openDevTools();
+    db.writeDb();
 
     mainWindow.on('closed', function () {
         mainWindow = null;

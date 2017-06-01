@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="jp">
+<head>
+    <meta charset="UTF-8">
+  　<script src="http://d3js.org/d3.v3.min.js"></script>
+    <script src='https://www.gstatic.com/firebasejs/3.4.1/firebase.js'></script>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+</head>
+<body>
+    <div id="lineGraph"></div>
+<script>
+    window.addEventListener("load", function() {
+        let width = 300;
+        let height = 300;
+
+        let canvas = d3.select("#lineGraph");
+        let svg = canvas.append("svg")
+            .attr("width",width)
+            .attr("height",height);
+
+        var dataArr = [
+            {month: 1, count:10},{month: 2, count:20},{month: 3, count:15},
+            {month: 4, count:25},{month: 5, count:28},{month: 6, count:19},
+            {month: 7, count:20},{month: 8, count:15}
+        ];
+        var scaleX = d3.scale.linear()
+            .domain([0, dataArr.length])
+            .range([0, width]);
+        var scaleY = d3.scale.linear()
+            .domain([0, d3.max(dataArr, function(d){return d.count;})])
+            .range([0,height]);
+        //area，lineオブジェクトでpath要素のd操作文字列を自動生成する．
+        //areaによる塗りつぶし
+        var area = d3.svg.area()
+            .x(function(d,i) { return scaleX(i) + 100/dataArr.length;})
+            .y0(function(d,i) { return height;})
+            .y1(function(d,i) { return scaleY(d.count);});
+        svg.append("path")
+            .attr("d", area(dataArr))
+            .attr("fill", "aqua");
+        //lineによる折れ線
+        var line = d3.svg.line()
+            .x(function(d,i) { return scaleX(i) + 100/dataArr.length;})
+            .y(function(d,i) { return scaleY(d.count);})
+            .interpolate("linear");//点の繋ぎ方の指定
+        svg.append("path")
+            .attr("d", line(dataArr))
+            .attr("stroke", "blue")
+            .attr("stroke-width", 2)
+            .attr("fill", "none");
+
+    },false);
+</script>
+</body>
+</html>
