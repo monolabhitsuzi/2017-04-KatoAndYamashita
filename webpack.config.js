@@ -1,7 +1,7 @@
 module.exports = {
     // watchモードを有効にする
     // watch: true,
-    entry: "./dest/script.js",
+    entry: "./public/js/app.js",
     output: {
         filename: "bundle.js",
         path: __dirname + '/bundle'

@@ -1,7 +1,6 @@
 /**
  * Created by zf7he on 2017/05/25.
  */
-let firebase = require("firebase");
 
 //DB設定情報
 let config = {

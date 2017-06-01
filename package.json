@@ -19,7 +19,9 @@
   },
   "homepage": "https://github.com/ktr0328/MoneyManager#readme",
   "devDependencies": {
+    "d3": "^3.4.1",
     "electron-pug": "^1.5.1",
+    "firebase": "^3.4.1",
     "jquery": "^3.2.1",
     "npm-run-all": "^4.0.2",
     "require.js": "^1.0.0"

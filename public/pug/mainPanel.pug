@@ -1,22 +1,6 @@
 //
    Created by zf7he on 2017/05/23.
 link(rel="stylesheet", type="text/css", href="./public/css/mainPanel.css")
-script(type="text/javascript" src="./public/js/common.js")
 main#mainPanel
-    //テスト
-    h2.content_ttl test
-    ul(style="list-style-type: none")
-        - for (var $i = 0; $i < 5; $i++)
-            li list #{$i}
-        -
-
-        - var list = ['link', 'image', 'text']
-
-        each item, index in list
-            p #{item + index}
-        -
-    h3.content_ttl ぷー
-
-    h1 ここからメインコンテンツブロック
     block content
         // メインコンテンツ

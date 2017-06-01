@@ -1,21 +1,14 @@
 /**
  * Created by zf7he on 2017/05/25.
  */
-let config = {
-    apiKey: "AIzaSyC6W4-fEr3trERePWrgGrp49SP62fFcvyQ",
-    authDomain: "money-5bd5f.firebaseapp.com",
-    databaseURL: "https://money-5bd5f.firebaseio.com",
-    projectId: "money-5bd5f",
-    storageBucket: "money-5bd5f.appspot.com",
-    messagingSenderId: "1102198358"
-};
+let config = require('./databaseConfig').config;
+const $ = require('jquery');
 
+// let firebase = require('firebase');
 firebase.initializeApp(config);
 
-let logout = document.getElementById('logout');
-
-//ログアウト処理
-logout.addEventListener('click', function () {
+// ログアウト処理
+$('#logout').on('click', () => {
     firebase.auth().signOut();
 });
 
@@ -25,34 +18,19 @@ firebase.auth().onAuthStateChanged(function (user) {
         window.location.href = './login.pug';
     } else {
         console.log(user.email);
-        readCategory('メールアドレスにする予定');
-        console.log('aaaaaa');
-        // writeTest(user.email);
-
-        // Promise.resolve().then(writeTest(user.email));
     }
 });
 
-function readCategory(mail) {
-    let categoryRef = firebase.database().ref(mail);
-
-    categoryRef.once('value').then(function (snapshot) {
-        // return new Promise((resolve) => {
-        console.log(snapshot.val());
-        // });
-    });
-}
-
-function writeTest(mail) {
+exports.writeDb = function (mail) {
     const userName = mail;
-    const category = "さかなさかな";
-    const dateYear = 2016;
-    const dateMonth = 7;
+    const category = "わあああああああ";
+    const dateYear = 2017;
+    const dateMonth = 3;
     const dateDay = 21;
 
     const date = "" + dateYear + dateMonth + dateDay;
 
-    const item = "さんま";
+    const item = "さんまままま";
     const price = 1000;
     const place = "イケヤ";
     const comment = "値切った結果";
@@ -74,10 +52,8 @@ function writeTest(mail) {
             }
             a.setDatas(oldDatas);
         }
-        console.log("aa");
         //set( [{}] )
+        // firebase.database().ref(userName).child(category).child(date).set(a.getDatas());
         firebase.database().ref(userName).child(category).child(date).set(a.getDatas());
     });
-
-
-}
+};
