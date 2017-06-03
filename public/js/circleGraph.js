@@ -4,7 +4,7 @@ window.addEventListener("load", function() {
 
     //データベース情報取得
     const readDb = function (resolve, reject) {
-        let categoryRef = firebase.database().ref('メールアドレスにする予定');
+        let categoryRef = firebase.database().ref('test');
         categoryRef.once('value').then(function (snapshot) {
             return resolve(snapshot.val());
         });
@@ -28,18 +28,22 @@ window.addEventListener("load", function() {
 const circle = function (datas) {
     let itemCounter = 0;
     let categoryDatas = [];
-    for(categorys in datas){
-        for (date in datas[categorys]){
-            console.log(date);
-            itemCounter += datas[categorys][date].length;
+    for(categorys in datas){//全カテゴリ列挙
+        for (date in datas[categorys]){//カテゴリ内の日付を全列挙
+            for(let i = 0 ; i < datas[categorys][date].length; i++){
+                if(!("none" === datas[categorys][date][i]["index"])){
+                    itemCounter++;
+                }
+            }
+
         }
         categoryDatas.push({category : categorys, item : itemCounter});
         itemCounter = 0;
     }
 
     let radius = 200;
-    let width = "100%";
-    let height = "100%";
+    let width = radius * 4;
+    let height = radius * 2;
     let canvas = d3.select("#circle");
 
     //svg定義
@@ -47,9 +51,8 @@ const circle = function (datas) {
         .append("svg")//描画設定
         .attr("width", width)
         .attr("height", height)
-        .append("g");//グラフ全体
-    // svg
-    //     .attr("transform", "translate(70%, 50%)");
+        .append("g")
+        .attr("transform", "translate(" + (width - radius * 2.8) + "," + height / 2 + ")");
     //切り捨て
     function floatFormat(number, n) {
         let _pow = Math.pow(10, n);
@@ -126,7 +129,8 @@ const circle = function (datas) {
         .attr("dy", ".50em")
         .style("text-anchor", "middle")
         .attr("transform", "translate(" + 0 + "," + 0 + ")")
-        .text("Category Rate");
+        .text("Category Rate")
+        .attr("fill","white");
     //-----------------------------------------------------------------------------------------------
 
     //降順
@@ -177,7 +181,11 @@ const circle = function (datas) {
         .attr("font-weight", "bold")
         .attr("font-family", "selif")
         .text(function (d, i) {
-            return d.category + " " + d.item + "%"
+            rate = d.item / total * 100;
+            if (rate > 4) {
+                word = floatFormat(rate, 1) + "%"
+            }
+            return d.category + " " + word;
         })
         .attr("fill", "white");
     //表示限界がある場合の代変え表示
@@ -197,6 +205,6 @@ const circle = function (datas) {
             .text(function (d, i) {
                 return "."
             })
-            .attr("fill", "black");
+            .attr("fill", "white");
     }
 };
