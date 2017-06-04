@@ -33,3 +33,21 @@ svg {
 g {
     transform: translate(200px, 200px);
 }
+
+#listPanel table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#listPanel td {
+    border: solid 1px #545454;
+    padding: 1px;
+}
+
+#listPanel td input {
+    background-color: #2d2d30;
+    color: lightgray;
+    border-style: none;
+    width: 90%;
+    padding-left: 3px;
+}

@@ -1,8 +1,8 @@
 const d3 = require('d3');
 const $ = require('jquery');
-window.addEventListener("load", function() {
 
-    //データベース情報取得
+//データベース情報取得
+module.exports.run = () => {
     const readDb = function (resolve, reject) {
         let categoryRef = firebase.database().ref('メールアドレスにする予定');
         categoryRef.once('value').then(function (snapshot) {
@@ -10,7 +10,7 @@ window.addEventListener("load", function() {
         });
     };
 
-    //同期処理
+//同期処理
     const p1 = new Promise(
         function (resolve, reject) {
             readDb(resolve, reject);
@@ -22,18 +22,17 @@ window.addEventListener("load", function() {
             circle(n)
         }
     );
-
-},false);
+};
 
 const circle = function (datas) {
     let itemCounter = 0;
     let categoryDatas = [];
-    for(categorys in datas){
-        for (date in datas[categorys]){
+    for (categorys in datas) {
+        for (date in datas[categorys]) {
             console.log(date);
             itemCounter += datas[categorys][date].length;
         }
-        categoryDatas.push({category : categorys, item : itemCounter});
+        categoryDatas.push({category: categorys, item: itemCounter});
         itemCounter = 0;
     }
 
@@ -56,6 +55,7 @@ const circle = function (datas) {
 
         return Math.floor(number * _pow) / _pow;
     }
+
     //昇順
     categoryDatas.sort(function (a, b) {
         if (a.item < b.item) return -1;
