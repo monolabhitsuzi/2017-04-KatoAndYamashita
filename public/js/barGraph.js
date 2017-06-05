@@ -12,6 +12,12 @@ window.addEventListener("load", function() {
         messagingSenderId: "1102198358"
     };
     firebase.initializeApp(config);
+
+    //----------------------------------------初回時だけ現在年月していするように分岐必要
+    let nowDate = new Date();
+    let year = nowDate.getFullYear();
+    let month = nowDate.getMonth()+1;
+
     //データベース情報取得
     const readDb = function (resolve, reject) {
         let categoryRef = firebase.database().ref('メールアドレスにする予定');
@@ -27,13 +33,13 @@ window.addEventListener("load", function() {
     );
     p1.then(
         function (n) {
-            bar(n)
+            bar(n, year, month)
         }
     );
 },false);
 
-const bar = function (datas) {
-    let dataObject = { "0000" : { "00" : [ {"品目":"値段"} ] }  };
+const bar = function (datas, displayYear , displayMonth) {
+    let dataObject = { "年" : { "月" : [ {"品目":"値段"} ] }  };
     for(categorys in datas){//カテゴリの回数ループ
         for (date in datas[categorys]){//カテゴリ内の日付の回数ループ
             for(let i = 0; i < datas[categorys][date].length; i++){//カテゴリ内の日付内の品目の回数ループ
@@ -60,7 +66,7 @@ const bar = function (datas) {
 
     console.log(dataObject);
     //-------------------------------------------------------以下で表示する年月を選択
-    barDataArray = dataFilter("2016","07");
+    barDataArray = dataFilter(displayYear, displayMonth);
     // [ { item:ふぐ , price:2000 } ]
     function dataFilter(year , month) {
         let barDatas = [];
@@ -193,7 +199,7 @@ const bar = function (datas) {
     //------------------------------------------------------------------------------------------
     //棒グラフの数値を設定
     bar.enter()
-        .append("text")          //text要素を追加
+        .append("text")//text要素を追加
         .attr("x", function (d, i) {
             return i * 50 + 17 + xOffset;
         })

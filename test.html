@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="jp">
+<head>
+    <meta charset="UTF-8">
+    　<script src="http://d3js.org/d3.v3.min.js"></script>
+    <script src='https://www.gstatic.com/firebasejs/3.4.1/firebase.js'></script>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+</head>
+<body>
+
+<script>
+    window.addEventListener("load", function() {
+        let config = {
+            apiKey: "AIzaSyC6W4-fEr3trERePWrgGrp49SP62fFcvyQ",
+            authDomain: "money-5bd5f.firebaseapp.com",
+            databaseURL: "https://money-5bd5f.firebaseio.com",
+            projectId: "money-5bd5f",
+            storageBucket: "money-5bd5f.appspot.com",
+            messagingSenderId: "1102198358"
+        };
+        firebase.initializeApp(config);
+        //データベース情報取得
+        const readDb = function (resolve, reject) {
+            let categoryRef = firebase.database().ref('test');
+            categoryRef.once('value').then(function (snapshot) {
+                return resolve(snapshot.val());
+            });
+        };
+
+        //----------------------------------------初回時だけ現在年月していするように分岐必要
+        let nowDate = new Date();
+        let nowYear = nowDate.getFullYear();
+        let nowMonth = nowDate.getMonth()+1;
+
+        //同期処理
+        const p1 = new Promise(
+            function (resolve, reject) {
+                readDb(resolve, reject);
+            }
+        );
+
+        p1.then(
+            function (n) {
+                lineBar(n,nowYear,nowMonth)
+            }
+        );
+
+    },false);
+
+const lineBar = function (datas, displayYear ,displayMonth) {
+    let dataObject = { "年" : { "月" : {"日付":"値段"}  }  };
+    for(categorys in datas) {//カテゴリの回数ループ
+        for (date in datas[categorys]) {//カテゴリ内の日付の回数ループ
+            for (let i = 0; i < datas[categorys][date].length; i++) {//カテゴリ内の日付内の品目の回数ループ
+                let price = datas[categorys][date][i]["価格"];
+                let runCheck = datas[categorys][date][i]["index"];
+                let year = date.substring(0, 4);
+                let month = date.substring(4, 6);
+                let day = date.substring(6, 8);
+
+                if (!("none" === runCheck)) {//消した状態の値の除外
+                    if (year in dataObject) {//年が一致した時
+                        if (month in dataObject[year]) {//月が一致した時
+                            if(day in dataObject[year][month]){//日付が一致した時
+                                dataObject[year][month][day] = +price + +dataObject[year][month][day];
+                            } else {
+                                dataObject[year][month][day] = price;
+                            }
+                        } else {
+                            dataObject[year][month] = {[day]: price};
+                        }
+                    } else {
+                        dataObject[year] = {[month]: {[day]: price}};
+                    }
+                }
+            }
+        }
+    }
+    console.log(dataObject);
+
+    //-------------------------------------------------------以下で表示する年月を選択
+    let barDataArray = dataFilter(displayYear, displayMonth);
+    // [ { day:01 , price:9029 } ]
+    function dataFilter(year , month) {
+        let barLineDatas = [];
+        let price;
+        for(let i = 1; i <= getMonthEndDay(year, month); i++){
+            try{
+                if(i in dataObject[year][month]){
+                    price = dataObject[year][month][i];
+                    barLineDatas.push({ "day":i,"price":price});
+                }else{
+                    barLineDatas.push({ "day":i,"price":0});
+                }
+
+            }catch(e){
+                barLineDatas.push({ "day":i,"price":0});
+            }
+
+        }
+        return barLineDatas;
+    }
+    //末日を求める
+    function getMonthEndDay(year, month) {
+        let dt = new Date(year, month, 0); //判定したい月の0日をみることにより前月の末日にする
+        return dt.getDate();
+    }
+
+    console.log(barDataArray);
+
+    let margin = {top: 20, right: 100, bottom: 30, left: 100},
+        width = 700 - margin.left - margin.right,
+        height = 500 - margin.top - margin.bottom;
+    //スケール範囲設定
+    let xScale = d3.scale.linear()
+        .domain([0, barDataArray.length])
+        .range([0, width]);
+    let yScale = d3.scale.linear()
+        .domain([0, d3.max(barDataArray, function(d){ return d.price + d.price/3; })])
+        .range([height, 0]);
+    //スケール値設定
+    let xAxis = d3.svg.axis()
+        .scale(xScale)
+        .orient("bottom")
+        .ticks(barDataArray.length);
+    let yAxis = d3.svg.axis()
+        .scale(yScale)
+        .orient("left")
+        .innerTickSize(-1 * width)
+    //キャンバス値設定
+    let svg = d3.select("body").append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    //塗りつぶし描画
+    let area = d3.svg.area()
+        .x(function(d,i) { return xScale(i) -4 + 100/barDataArray.length;})
+        .y0(function(d,i) { return yScale(d.price);})
+        .y1(function(d,i) { return height;});
+    svg.append("path")
+        .attr("d", area(barDataArray))
+        .attr("fill", "aqua")
+        .style("opacity", 0.5);
+    //折れ線の設定
+    let line = d3.svg.line()
+        .x(function(d,i) { return xScale(i); })
+        .y(function(d) { return yScale(d.price); });
+    //折れ線の描画
+    svg.append("path")
+        .datum(barDataArray)
+        .attr("class", "line")
+        .attr("d", line(barDataArray))
+        .attr("fill", "none")
+        .attr("stroke", "blue")
+        .attr("stroke-width", 2);
+    //横スケール線描画
+    svg.append("g")
+        .attr("class", "xaxis")
+        .attr("transform", "translate(0," + height + ")")
+        .call(xAxis)
+        .attr("fill", "none")
+        .attr("stroke", "black")
+        .selectAll("text")
+        .text(function (d, i) {
+            let day = "";
+            if(i !== barDataArray.length)day = d+1;
+            return day;
+        });
+    //縦スケール線描画
+    svg.append("g")
+        .attr("class", "yaxis")
+        .call(yAxis)
+        .attr("fill", "none")
+        .attr("stroke", "black");
+    //補助線の薄さ設定
+    svg.selectAll(".yaxis")
+        .selectAll("g")
+        .selectAll("line")
+        .style("opacity", 0.2);
+    //縦スケールの文字設定
+    svg.selectAll(".yaxis")
+        .selectAll("g")
+        .selectAll("text")
+        .attr("transform", "translate(" +  -10 + ",0 )")
+        .text(function (d, i) {
+            return "¥" + d;
+        });
+    //スケール文字の一括設定
+    svg.selectAll(".tick")
+        .attr("font-size", 12);
+
+
+}
+
+</script>
+</body>
+</html>

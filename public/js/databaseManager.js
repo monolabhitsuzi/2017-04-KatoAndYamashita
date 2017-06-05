@@ -22,6 +22,7 @@ firebase.auth().onAuthStateChanged(function (user) {
         //writeDb();
         //deleteDb();
         //readDbList();
+        lineBarGraph();
     }
 });
 
