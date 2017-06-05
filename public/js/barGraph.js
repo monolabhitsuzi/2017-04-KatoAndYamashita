@@ -71,25 +71,29 @@ const bar = function (datas, displayYear , displayMonth) {
     function dataFilter(year , month) {
         let barDatas = [];
         //指定された年の月の商品を全検索
-        for(let i = 0; i < dataObject[year][month].length; i++){
-            if(i===0){//初回のみ即追加する
-                barDatas.push( dataObject[year][month][i] );
-            }else{
-                let writeFlag = false;//通常書き込みの有無
-                let itemKey = dataObject[year][month][i]["item"];
-                for(let j = 0; j < barDatas.length; j++){
-                    if(itemKey === barDatas[j]["item"]){//一致した商品があった場合
-                        barDatas[j]["price"] = barDatas[j]["price"] +  dataObject[year][month][i]["price"];
-                        writeFlag = false;
-                        break;
-                    }else{
-                        writeFlag = true;
+        try {
+            for (let i = 0; i < dataObject[year][month].length; i++) {
+                if (i === 0) {//初回のみ即追加する
+                    barDatas.push(dataObject[year][month][i]);
+                } else {
+                    let writeFlag = false;//通常書き込みの有無
+                    let itemKey = dataObject[year][month][i]["item"];
+                    for (let j = 0; j < barDatas.length; j++) {
+                        if (itemKey === barDatas[j]["item"]) {//一致した商品があった場合
+                            barDatas[j]["price"] = barDatas[j]["price"] + dataObject[year][month][i]["price"];
+                            writeFlag = false;
+                            break;
+                        } else {
+                            writeFlag = true;
+                        }
+                    }
+                    if (writeFlag) {
+                        barDatas.push(dataObject[year][month][i]);
                     }
                 }
-                if(writeFlag){
-                    barDatas.push( dataObject[year][month][i] );
-                }
             }
+        }catch (e){
+            barDatas.push({price:0,item:""});
         }
         return barDatas;
     }
