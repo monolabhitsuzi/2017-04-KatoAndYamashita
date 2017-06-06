@@ -107,6 +107,29 @@ const lineBar = function (datas, displayYear ,displayMonth) {
     }
 
     console.log(barDataArray);
+    barDataArray = [
+        { day:01 , price:9029 },
+        { day:02 , price:3450 },
+        { day:03 , price:5430 },
+        { day:04 , price:12000 },
+        { day:05 , price:5000 },
+        { day:06 , price:9445 },
+        { day:07 , price:2463 },
+        { day:08 , price:6473 },
+        { day:09 , price:1000 },
+        { day:10 , price:400 },
+        { day:11 , price:5050 },
+        { day:12 , price:7029 },
+        { day:13 , price:8029 },
+        { day:14 , price:4029 },
+        { day:15 , price:5029 },
+        { day:16 , price:8029 },
+        { day:17 , price:2029 }
+
+
+
+    ];
+
 
     let margin = {top: 20, right: 100, bottom: 30, left: 100},
         width = 700 - margin.left - margin.right,
@@ -126,7 +149,7 @@ const lineBar = function (datas, displayYear ,displayMonth) {
     let yAxis = d3.svg.axis()
         .scale(yScale)
         .orient("left")
-        .innerTickSize(-1 * width)
+        .innerTickSize(-1 * width);
     //キャンバス値設定
     let svg = d3.select("body").append("svg")
         .attr("width", width + margin.left + margin.right)

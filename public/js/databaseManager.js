@@ -17,12 +17,6 @@ firebase.auth().onAuthStateChanged(function (user) {
     if (!user) {
         window.location.href = './login.pug';
     } else {
-        console.log("start");
-        //--------------------test------------------------------------
-        //writeDb();
-        //deleteDb();
-        //readDbList();
-        lineBarGraph();
     }
 });
 

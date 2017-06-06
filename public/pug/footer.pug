@@ -2,13 +2,20 @@
    Created by zf7he on 2017/05/23.
 link(rel="stylesheet", type="text/css", href="./public/css/footer.css")
 script(src='https://www.gstatic.com/firebasejs/3.4.1/firebase.js')
-p ふったー
-table
-    tr
-        td
-            input(type="date" disabled style="color: white; background-color: black")
-        td 2
-            input(type="date")
-        td 3
-            input(type="date")
-input#logout(type="button" value="logout")
+div(class="foo")
+    input(type="date" id="date" required , style="color: white; background-color: black")
+    input(class="bu" type='button', value='Enter', onclick='inputCheck()')
+    input(class="bu" type='button', value='Clear', onclick='clearTextBox()')
+    br
+    input(type='text', size='30', id='category', placeholder="category", style="color: white; background-color: black")
+
+    input(type='text', size='80', name='item' , placeholder="item" , style="color: white; background-color: black")
+    br
+    input(type='text', size='30', name='item' , placeholder="price", style="color: white; background-color: black")
+
+    input(type='text', size='40', name='item', placeholder="place", style="color: white; background-color: black")
+
+    input(type='text', size='80', name='item', placeholder="comment", style="color: white; background-color: black")
+
+script(src='./public/js/input.js')
+
